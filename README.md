@@ -69,7 +69,7 @@ A clean and modern Kanban board for task management, built with **React**, **Typ
 
 ---
 ## File Structure
-
+```bash
 src/
 ├── api/              # Mock API to simulate task fetching
 ├── components/       # TaskCard, TaskModal, FilterBar, etc.
@@ -80,7 +80,7 @@ src/
 └── main.tsx          # React entry point
 
 ---
-
+```
 ## 🚀 Getting Started
 
 ### 1. Clone the repository
@@ -88,11 +88,14 @@ src/
 ```bash
 git clone https://github.com/your-username/kanban-board.git
 cd kanban-board
+```
 
 ### 2. Install Dependencies
-
+```bash
 npm install
+```
 
 ### 3. Start the development server
-
+```bash
 npm run dev
+```
