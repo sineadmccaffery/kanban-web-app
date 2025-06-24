@@ -1,54 +1,98 @@
-# React + TypeScript + Vite
+# 🗂️ Kanban Board
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A clean and modern Kanban board for task management, built with **React**, **TypeScript**, **Tailwind CSS**, and **@dnd-kit**. This app supports full drag-and-drop functionality, task editing, filtering, and sorting — all with smooth transitions and visually pleasing styles.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features I Implemented
 
-## Expanding the ESLint configuration
+- ✅ **Drag and Drop Between Columns**  
+  Using `@dnd-kit/core` and `@dnd-kit/sortable`, users can drag tasks between different sections or reorder them within the same section.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 🎨 **Color-Coded Tasks**  
+  Each task is styled based on its section and priority:
+  - Section determines the base hue.
+  - Priority controls the background transparency.
+  - Colors are converted from hex to `rgba()` to support dynamic opacity levels.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- 🧭 **Filtering and Sorting**  
+  Users can filter tasks by section, priority, or assignee.  
+  Sorting options include:
+  - Due date (ascending/descending)
+  - Priority (Low → High or High → Low)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- 📝 **Task Detail Page**  
+  Clicking the edit icon opens a full-page modal where users can edit a task’s metadata, including:
+  - Title
+  - Description
+  - Priority
+  - Due date
+  - Assignee
+  - Section
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- ➕ **Floating Add Button**  
+  A fixed-position button opens a modal to create new tasks.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- 🔁 **Smooth Animations**  
+  Drag interactions are animated using `transform` values from `@dnd-kit`.  
+  Transitions are styled with Tailwind’s `transition` and `ease-in-out` classes.  
+  A small delay prevents premature updates until the user releases the task.
+
+- 📱 **Responsive Layout**  
+  The board uses `flex` and `overflow-x-auto` for scrollable columns, making it fully responsive on all screen sizes.
+
+---
+
+## 💡 Tradeoffs and Reasoning
+
+- 📦 **Web-Only Drag Support**  
+  I prioritized web compatibility for drag-and-drop using `@dnd-kit`, which has limited mobile-native gesture support.  
+  Tradeoff: Touch gestures on mobile are not fully optimized, but this allowed a smoother and more feature-rich desktop experience.
+
+- 🧪 **Mock API Over Persistent Backend**  
+  Tasks are fetched from a local mock API (`fetchTasks()`), which simplifies development and avoids deployment complexity.  
+  Tradeoff: Changes are not persisted across refreshes. A future step would be integrating Supabase or Firebase.
+
+- 🔄 **Full Card Click Disabled for Detail View**  
+  To avoid accidental task opens during drag, I scoped the detail view trigger to a dedicated edit icon.  
+  Tradeoff: Slightly less intuitive, but greatly improves drag usability.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React + TypeScript
+- **State Management:** React Context API
+- **Drag & Drop:** `@dnd-kit/core`, `@dnd-kit/sortable`
+- **Routing:** React Router
+- **Styling:** Tailwind CSS
+
+---
+## File Structure
+
+src/
+├── api/              # Mock API to simulate task fetching
+├── components/       # TaskCard, TaskModal, FilterBar, etc.
+├── context/          # TaskContext for shared task state
+├── screens/          # KanbanBoard and TaskDetail screens
+├── types/            # TypeScript type definitions
+├── App.tsx           # Main route setup
+└── main.tsx          # React entry point
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/kanban-board.git
+cd kanban-board
+
+### 2. Install Dependencies
+
+npm install
+
+### 3. Start the development server
+
+npm run dev

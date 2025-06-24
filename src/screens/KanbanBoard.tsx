@@ -1,5 +1,5 @@
 import { DragOverlay, type DragEndEvent } from '@dnd-kit/core';
-import { SortableContext, arrayMove, horizontalListSortingStrategy } from '@dnd-kit/sortable';
+import { arrayMove } from '@dnd-kit/sortable';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import { fetchTasks } from '../api/mockApi';
@@ -7,8 +7,8 @@ import DroppableColumn from '../components/DroppableColumn';
 import FilterBar from '../components/FilterBar';
 import TaskModal from '../components/TaskModal';
 import { useTasks } from '../context/TaskContext';
-import type { ColumnType, TaskType } from '../types/types';
-import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import type { TaskType } from '../types/types';
+import { DndContext } from '@dnd-kit/core';
 import TaskCard from '../components/TaskCard';
 
 
@@ -27,15 +27,6 @@ export default function KanbanBoard({ }: any) {
     });
     const [sortBy, setSortBy] = useState<'dueDate' | 'priority' | ''>('');
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-
-    const sensors = useSensors(
-        useSensor(PointerSensor, {
-            activationConstraint: {
-                delay: 150,
-                tolerance: 5,
-            },
-        })
-    );
 
     useEffect(() => {
         if (tasks.length === 0) {
@@ -76,11 +67,6 @@ export default function KanbanBoard({ }: any) {
 
         return filtered;
     }, [tasks, filters, sortBy, sortOrder]);
-
-    const sectionedTasks = SECTIONS.reduce((acc, section) => {
-        acc[section] = filteredTasks.filter(task => task.section === section);
-        return acc;
-    }, {} as Record<string, TaskType[]>);
 
     const handleDragEnd = (event: DragEndEvent) => {
         console.log('DRAG EVENT:', event);
@@ -175,7 +161,7 @@ export default function KanbanBoard({ }: any) {
                     })}
                 </div>
                 <DragOverlay>
-                    {activeTask ? <TaskCard task={activeTask} onPress={() => {}} /> : null}
+                    {activeTask ? <TaskCard task={activeTask} onPress={() => { }} /> : null}
                 </DragOverlay>
             </DndContext>
 
